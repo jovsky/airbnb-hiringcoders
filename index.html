@@ -1,0 +1,202 @@
+<html>
+
+<head>
+
+    <meta charset="UTF-8" >
+    <link rel="shortcut icon" href="./assets/icon-2.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title> AirBnB --✈</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<body>
+    <header>
+        <nav id="topnav" class="navbar  navbar-expand-lg navbar-dark">
+            <a class="navbar-brand mx-5" href="index.html">
+                <img src="assets/icon.png" width="30" height="30">
+            </a>
+            <button id="btntoggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav mr-auto" >
+                    <a class="nav-item nav-link active" href="index.html">Principal <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="#">Desenvolvedor</a>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+        <div class="mt-4"">
+            <h1 id="welcometext" class="container-sm gradienttext mb-4">Bem-vindo ao AirBnB!</h1>
+        </div>
+
+        <div id="checkin-div-row" class="row w-100 mt-5 align-items-center">
+            <div id="checkin-div" class="d-flex justify-content-center px-5">
+                <form id="form-search" onsubmit="event.preventDefault()" class="w-100">
+                    <div class="form-row justify-content-start w-100" >
+                        <div class="col-lg-4 mb-2">
+                            <label for="location-search">Localização</label>
+                            <input type="text" class="form-control" id="location-search"
+                                placeholder="Para onde você vai?" value="São Paulo, SP, Brasil" required>
+                            <div class="invalid-feedback">
+                                Selecione uma localização
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-2 pl-0">
+                            <label for="checkin">Check-in</label>
+                            <input type="date" class="form-control" id="checkin" required>
+                            <div class="invalid-feedback">
+                                Selecione a data de check-in
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-2 pl-0">
+                            <label for="checkout">Check-out</label>
+                            <input type="date" class="form-control" id="checkout" required>
+                            <div class="invalid-feedback">
+                                Selecione a data de check-out
+                            </div>
+                        </div>
+                        <div class="col-lg-1 mb-2 pl-0">
+                            <label for="hostages">Hóspedes</label>
+                            <input type="number" class="form-control" id="hostages" min="1" value="1" required>
+                            <div class="invalid-feedback">
+                                Selecione o número de hóspedes
+                            </div>
+                        </div>
+                        <div class="mb-2 mt-lg-3 ml-auto d-flex align-items-end">
+                            <button id="btn-checkin" type="submit" onclick="searchAccomod()" class="btn btn-outline-success btn-go" disabled>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    <div id="div-travel-to" class="container-sm mt-5 pt-5 pb-4">
+        <h2 class="gradienttext">Encontre as melhores ofertas em hospedagens nacionais e internacionais</h1>
+        <div id="div-flags" class="d-flex flex-wrap justify-content-center mt-3">
+
+                <div class="flag" data-toggle="tooltip" data-placement="bottom" data-html="true" title="São Paulo <br> Rio de Janeiro <br> Espírito Santo <br> Bahia">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/2000px-Flag_of_Brazil.svg.png" >
+                    <p>Brasil</p>
+                </div>
+
+                <div class="flag" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Ilhas Baleares <br> Menorca <br> Son Parc">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg" >
+                    <p>Espanha</p>
+                </div>
+
+                <div class="flag" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Cidade do México <br> Iztacalco <br> Amado Nervo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg" >
+                    <p>México</p>
+                </div>
+        </div>
+    </div>
+
+    <div id="space">
+        <br><br>
+    </div>
+
+    <div id="container-results" style="display: none;">
+
+        <div class="container-sm">
+            <h2 id="result-title" class="gradienttext"></h1>
+            <p id="result-data" class="mt-3" ></p>
+        </div>
+
+        <div id="cards" class="d-flex flex-wrap justify-content-center"></div>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                            <h5 class="modal-title">Titulo modal</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                      </div>
+                      <div class="modal-body p-2">
+                            <div id="modal-info-row" class="row justify-content-around">
+                                <div id="modal-info" class="col-sm-6 "></div>
+                                <div id="modal-price" class="col-sm-5 "></div>
+                            </div>
+
+                            <div id="modal-map" class="row">
+                                Mapa aqui
+                            </div>
+
+                      </div>
+                      <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary btn-go">Comprar</button>
+                      </div>
+                </div>
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul id="pages" class="pagination justify-content-center my-5">
+            </ul>
+        </nav>
+
+    </div>
+
+
+    <footer>
+        <div id="footer-gradient">
+        </div>
+        <div id="footer-row" class="row">
+            <div class="col-sm-4" >
+                <img src="assets/airbnb.png">
+            </div>
+            <div class="col-sm-4" >
+                João Vitor de Melo © 2020 <br>
+                Todos os direitos reservados.
+            </div>
+            <div id="social-media" class="col-sm-4 justify-content-center" >
+                <a href="https://www.linkedin.com/in/joaovitormp/" target="_blank" 
+                data-toggle="tooltip" data-placement="top" data-html="true" title="Linkedin">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/jovsky/" target="_blank" 
+                    data-toggle="tooltip" data-placement="top" data-html="true" title="Github">
+                    <i class="fab fa-github-square mx-3"></i>
+                </a>
+                <a href="https://www.facebook.com/JoaovitoorMelo/" target="_blank" 
+                data-toggle="tooltip" data-placement="top" data-html="true" title="Facebook">
+                    <i class="fab fa-facebook-square"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+        
+</body>
+
+<!-- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Meu script -->
+<script src="./js/maps_places.js"></script>
+<script src="./js/main.js"></script>
+<script src="./js/pagination.js"></script>
+<script src="./js/extra.js"></script>
+
+<!-- Font Awesome Icons -->
+<script defer src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.13.0/js/v4-shims.js"></script>
+<!--script src="https://kit.fontawesome.com/e1fd5cad8d.js" crossorigin="anonymous"></script-->
+
+<!-- Google APIs: Maps, Places -->
+<script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALMOLu3jV4biVNK76TqB9S853Nx4ZF0_w&language=pt-BR&libraries=places,geometry&callback=initializeGoogleAPIs"></script>
+
+
+</html>
