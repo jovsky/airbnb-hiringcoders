@@ -115,22 +115,24 @@ function setFilteredData() {
 
     data_filter = [];
     let terms = locName.value.split(", ");
-    let nT = terms.length;
+    let nT = (terms.length > 1) ? 2 : 1;
     let count = 0;
     let local;
 
+    console.log("NT = " + nT);
 
     for (var i=0; i<data_all.length; i++){
 
         count=0;
 
         local = data_all[i].local.toLowerCase();
-        
+        console.log("<>" + local);
         for (var j = 0; j < terms.length; j++) {
+            
             if (local.includes(terms[j].toLowerCase())) {
                 count++;
+                console.log(" <<<"+count+">>>>" + terms[j].toLowerCase());
                 if (count >= nT){
-                    
                     data_filter.push(data_all[i]);
                     break;
                 }
